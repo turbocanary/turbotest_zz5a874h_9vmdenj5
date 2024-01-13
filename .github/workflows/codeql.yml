@@ -1,0 +1,32 @@
+jobs:
+  analyze:
+    name: Analyze
+    runs-on: self-hosted
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Initialize CodeQL
+      uses: github/codeql-action/init@main
+      with:
+        languages: ${{ matrix.language }}
+    - name: Autobuild
+      uses: github/codeql-action/autobuild@main
+    - name: Analyze
+      uses: github/codeql-action/analyze@main
+    strategy:
+      fail-fast: false
+      matrix:
+        language:
+        - javascript
+name: CodeQL
+'on':
+  pull_request:
+    branches:
+    - master
+  push:
+    branches:
+    - master
+permissions:
+  actions: read
+  contents: read
+  security-events: write
